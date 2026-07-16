@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invitación | Chars 32</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- MÚSICA DE FONDO -->
+<audio id="musica" loop>
+
+    <source src="musica.mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+
+<!-- PANTALLA DE BIENVENIDA -->
+
+<div id="inicio" class="pantalla">
+
+
+    <div class="bienvenida">
+
+
+        <h1>
+            🎉 ¡Estás invitado! 🎉
+        </h1>
+
+
+        <h2>
+            Celebrando los 
+            <span>32 años</span>
+            de
+            <b>Chars</b>
+        </h2>
+
+
+
+        <button id="abrirBtn">
+
+            ✨ Abrir invitación ✨
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- GLOBOS -->
+
+<div class="globos">
+
+    <span>🎈</span>
+    <span>🎈</span>
+    <span>🎈</span>
+    <span>🎈</span>
+
+</div>
+
+
+
+
+
+
+
+<!-- INVITACIÓN -->
+
+<div id="contenido" style="display:none;">
+
+
+
+<section class="hero">
+
+
+<!-- FOTO PRINCIPAL
+     Coloca aquí:
+     img/chars.jpg
+-->
+
+<img 
+src="img/chars.jpg"
+class="foto-principal"
+alt="Chars">
+
+
+
+<h1>
+
+🎂 Celebrando los 32 años de
+
+<span>
+Chars
+</span>
+
+</h1>
+
+
+
+<p class="fecha">
+
+📅 11 de septiembre
+
+<br>
+
+🕢 Recepción 7:30 PM
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section id="info">
+
+
+<h2>
+📍 Información del evento
+</h2>
+
+
+
+<div class="card">
+
+
+<p>
+
+<b>Lugar:</b>
+
+<br>
+
+Salón Jardín La Piscina
+
+</p>
+
+
+
+<p>
+
+Tlalnepantla 207,
+Villada,
+57710,
+Nezahualcóyotl,
+Edo. Méx.
+
+</p>
+
+
+
+<a 
+class="btn"
+target="_blank"
+href="https://maps.google.com/?q=Tlalnepantla+207+Villada+57710+Nezahualcoyotl">
+
+🗺️ Abrir ubicación
+
+</a>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+
+<h2>
+✅ Confirma tu asistencia
+</h2>
+
+
+<div class="card">
+
+
+<input 
+id="nombre"
+placeholder="Nombre de los invitados">
+
+
+<button onclick="confirmar()">
+
+Confirmar asistencia 🎉
+
+</button>
+
+
+<p id="msg"></p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<footer>
+
+🎉 Gracias por acompañarnos 🎉
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="confeti"></div>
+<script type="module" src="script.js"></script>
+
+
+</body>
+
+</html>
