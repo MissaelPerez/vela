@@ -1,438 +1,1419 @@
-/* ==========================
-   CONFIGURACIÓN GENERAL
-========================== */
+/* =====================================================
+   CHARS 32
+   INVITACIÓN DIGITAL
+   NEGRO / DORADO / ELEGANTE
+===================================================== */
 
-*{
-    box-sizing:border-box;
+
+* {
+    box-sizing: border-box;
 }
 
 
-body{
-
-    margin:0;
-
-    font-family:'Arial', sans-serif;
-
-    background:#0d0d0d;
-
-    color:white;
-
-    text-align:center;
-
-    overflow-x:hidden;
-
+html {
+    scroll-behavior: smooth;
 }
 
 
+body {
 
-/* ==========================
-   PANTALLA DE INICIO
-========================== */
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #2a250f 0%,
+            #101010 35%,
+            #050505 75%
+        );
+
+    color: white;
+
+    text-align: center;
+
+    overflow-x: hidden;
+}
 
 
-.pantalla{
+/* =====================================================
+   PANTALLA DE BIENVENIDA
+===================================================== */
 
-    height:100vh;
 
-    display:flex;
+.pantalla {
 
-    justify-content:center;
+    position: fixed;
 
-    align-items:center;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 100;
+
+    overflow: hidden;
 
     background:
 
-    radial-gradient(circle,#292929,#000);
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(212,175,55,.18),
+            transparent 30%
+        ),
 
+        radial-gradient(
+            circle at top,
+            #29230c,
+            #090909 55%,
+            #020202
+        );
 }
 
 
+/* Luz decorativa izquierda */
 
-.bienvenida{
+.pantalla::before {
 
-    animation:entrada 1.5s ease;
+    content: "";
 
-    padding:30px;
+    position: absolute;
 
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    background: #d4af37;
+
+    filter: blur(130px);
+
+    opacity: .16;
+
+    top: -180px;
+
+    left: -120px;
 }
 
 
+/* Luz decorativa derecha */
 
-h1{
+.pantalla::after {
 
-    font-size:45px;
+    content: "";
 
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    background: #fff0a0;
+
+    filter: blur(130px);
+
+    opacity: .12;
+
+    bottom: -180px;
+
+    right: -120px;
 }
 
 
-
-h2{
-
-    font-size:30px;
-
-}
+/* =====================================================
+   BIENVENIDA
+===================================================== */
 
 
+.bienvenida {
 
-span{
+    position: relative;
 
-    color:#d4af37;
+    z-index: 10;
 
-}
+    width: min(90%, 650px);
 
+    padding: 55px 30px;
 
+    border-radius: 30px;
 
-button,
-.btn{
-
-
-    background:#d4af37;
-
-    color:#111;
-
-    border:none;
-
-    padding:15px 30px;
-
-    border-radius:40px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    text-decoration:none;
-
-    transition:.3s;
-
-}
-
-
-
-button:hover,
-.btn:hover{
-
-    transform:scale(1.1);
-
-    box-shadow:0 0 20px #d4af37;
-
-}
-
-
-
-
-
-/* ==========================
-   INVITACIÓN
-========================== */
-
-
-.hero{
-
-    min-height:90vh;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:30px;
-
+    border: 1px solid rgba(212,175,55,.45);
 
     background:
 
-    linear-gradient(
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
 
-    rgba(0,0,0,.6),
-
-    rgba(0,0,0,.9)
-
-    );
-
-}
-
-
-
-
-.foto-principal{
-
-
-    width:220px;
-
-    height:220px;
-
-    object-fit:cover;
-
-    border-radius:50%;
-
-    border:5px solid #d4af37;
-
-    box-shadow:0 0 30px #d4af37;
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-.fecha{
-
-    font-size:22px;
-
-    line-height:1.6;
-
-}
-
-
-
-
-
-
-/* ==========================
-   TARJETAS
-========================== */
-
-
-section{
-
-    padding:60px 20px;
-
-}
-
-
-
-
-.card{
-
-
-    max-width:500px;
-
-    margin:auto;
-
-    background:#171717;
-
-    padding:30px;
-
-    border-radius:25px;
+    backdrop-filter: blur(15px);
 
     box-shadow:
 
-    0 0 30px rgba(212,175,55,.15);
+        0 0 70px rgba(212,175,55,.13),
 
+        inset 0 0 30px rgba(255,255,255,.025);
 
+    animation: entrada 1.4s ease;
 }
 
 
+.bienvenida::before {
 
+    content: "";
 
-input{
+    position: absolute;
 
+    top: 0;
 
-    width:80%;
+    left: 12%;
 
-    padding:15px;
+    width: 76%;
 
-    border-radius:30px;
+    height: 2px;
 
-    border:none;
+    background:
 
-    margin:15px;
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            #fff3a6,
+            #d4af37,
+            transparent
+        );
 
-    font-size:16px;
-
+    box-shadow: 0 0 15px #d4af37;
 }
 
 
+.decoracion-superior {
+
+    color: #d4af37;
+
+    font-size: 18px;
+
+    letter-spacing: 8px;
+
+    margin-bottom: 20px;
+}
 
 
+.pre-titulo {
 
-/* ==========================
+    color: #d4af37;
+
+    font-size: 13px;
+
+    letter-spacing: 5px;
+
+    margin: 0 0 15px;
+
+    font-weight: bold;
+}
+
+
+.bienvenida h1 {
+
+    margin: 0 0 20px;
+
+    font-size: clamp(34px, 7vw, 60px);
+
+    line-height: 1.1;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fff0a0,
+            #d4af37,
+            #ffffff
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-size: 200% auto;
+
+    animation: brillo 5s linear infinite;
+}
+
+
+.bienvenida h2 {
+
+    margin: 0 auto;
+
+    max-width: 520px;
+
+    font-size: clamp(21px, 4vw, 30px);
+
+    line-height: 1.5;
+
+    font-weight: 400;
+
+    color: #eee;
+}
+
+
+.bienvenida span {
+
+    color: #d4af37;
+
+    font-weight: bold;
+}
+
+
+.bienvenida b {
+
+    color: white;
+}
+
+
+.texto-bienvenida {
+
+    max-width: 440px;
+
+    margin: 25px auto 30px;
+
+    color: #bbb;
+
+    line-height: 1.7;
+
+    font-size: 16px;
+}
+
+
+.linea-dorada {
+
+    width: 90px;
+
+    height: 2px;
+
+    margin: 25px auto;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            transparent
+        );
+
+    box-shadow: 0 0 12px rgba(212,175,55,.5);
+}
+
+
+.musica-aviso {
+
+    margin-top: 25px;
+
+    color: #777;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+
+button,
+.btn {
+
+    display: inline-block;
+
+    border: 1px solid #e7cc65;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff2a8,
+            #d4af37,
+            #a77b00
+        );
+
+    color: #111;
+
+    padding: 15px 30px;
+
+    border-radius: 50px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-shadow:
+
+        0 8px 25px rgba(212,175,55,.25);
+
+    transition: all .3s ease;
+}
+
+
+button:hover,
+.btn:hover {
+
+    transform: translateY(-4px) scale(1.03);
+
+    box-shadow:
+
+        0 12px 35px rgba(212,175,55,.5);
+}
+
+
+button:active,
+.btn:active {
+
+    transform: scale(.97);
+}
+
+
+/* =====================================================
    GLOBOS
-========================== */
+===================================================== */
 
 
-.globos span{
+.globos {
 
+    position: fixed;
 
-    position:fixed;
+    inset: 0;
 
-    bottom:-100px;
+    pointer-events: none;
 
-    font-size:60px;
+    overflow: hidden;
 
-    z-index:5;
-
-    animation:subir 12s infinite;
-
-
+    z-index: 20;
 }
 
 
+.globos span {
 
-.globos span:nth-child(1){
+    position: absolute;
 
-    left:10%;
+    bottom: -120px;
 
+    font-size: 55px;
+
+    opacity: .9;
+
+    filter:
+        drop-shadow(
+            0 8px 8px rgba(0,0,0,.5)
+        );
+
+    animation: subir 13s linear infinite;
 }
 
 
-.globos span:nth-child(2){
+.globos span:nth-child(1) {
 
-    left:35%;
+    left: 7%;
 
-    animation-delay:3s;
+    animation-duration: 13s;
 
+    animation-delay: 0s;
 }
 
 
+.globos span:nth-child(2) {
 
-.globos span:nth-child(3){
+    left: 32%;
 
-    left:60%;
+    font-size: 45px;
 
-    animation-delay:6s;
+    animation-duration: 16s;
 
+    animation-delay: 3s;
 }
 
 
+.globos span:nth-child(3) {
 
-.globos span:nth-child(4){
+    left: 65%;
 
-    left:85%;
+    font-size: 65px;
 
-    animation-delay:2s;
+    animation-duration: 14s;
 
+    animation-delay: 6s;
 }
 
 
+.globos span:nth-child(4) {
 
+    left: 88%;
 
+    font-size: 50px;
 
-@keyframes subir{
+    animation-duration: 17s;
 
-
-0%{
-
-transform:translateY(0);
-
-opacity:1;
-
+    animation-delay: 2s;
 }
 
 
-100%{
+@keyframes subir {
 
-transform:translateY(-120vh);
+    0% {
 
-opacity:0;
+        transform:
+            translateY(0)
+            translateX(0)
+            rotate(-5deg);
 
+        opacity: 0;
+    }
+
+    10% {
+
+        opacity: .9;
+    }
+
+    50% {
+
+        transform:
+            translateY(-55vh)
+            translateX(30px)
+            rotate(7deg);
+    }
+
+    100% {
+
+        transform:
+            translateY(-125vh)
+            translateX(-30px)
+            rotate(-8deg);
+
+        opacity: 0;
+    }
 }
 
 
+/* =====================================================
+   CONTENIDO
+===================================================== */
+
+
+#contenido {
+
+    position: relative;
+
+    z-index: 2;
+
+    animation: aparecerContenido 1.2s ease;
 }
 
 
+/* =====================================================
+   HERO
+===================================================== */
 
 
+.hero {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 70px 20px;
+
+    position: relative;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(212,175,55,.12),
+            transparent 35%
+        );
+}
 
 
-/* ==========================
+.hero::before {
+
+    content: "✦";
+
+    position: absolute;
+
+    top: 15%;
+
+    left: 10%;
+
+    color: #d4af37;
+
+    font-size: 30px;
+
+    animation: estrella 3s infinite;
+}
+
+
+.hero::after {
+
+    content: "✦";
+
+    position: absolute;
+
+    bottom: 15%;
+
+    right: 10%;
+
+    color: #d4af37;
+
+    font-size: 25px;
+
+    animation: estrella 4s infinite;
+}
+
+
+/* =====================================================
+   FOTO PRINCIPAL
+===================================================== */
+
+
+.foto-principal {
+
+    width: 230px;
+
+    height: 230px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 4px solid #d4af37;
+
+    padding: 6px;
+
+    background: #111;
+
+    box-shadow:
+
+        0 0 0 8px rgba(212,175,55,.07),
+
+        0 0 45px rgba(212,175,55,.45);
+
+    margin-bottom: 25px;
+
+    animation:
+        fotoEntrada 1.3s ease,
+        flotar 4s ease-in-out infinite;
+}
+
+
+.etiqueta,
+.mini-titulo {
+
+    color: #d4af37;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+}
+
+
+.hero h1 {
+
+    max-width: 850px;
+
+    margin: 10px auto 20px;
+
+    font-size: clamp(32px, 6vw, 55px);
+
+    line-height: 1.15;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff,
+            #fff0a0,
+            #d4af37
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+.hero span {
+
+    color: #d4af37;
+}
+
+
+.fecha {
+
+    font-size: 21px;
+
+    line-height: 1.8;
+
+    color: #ddd;
+}
+
+
+.fecha b {
+
+    color: #d4af37;
+}
+
+
+.separador {
+
+    color: #d4af37;
+
+    font-size: 25px;
+
+    margin: 25px 0;
+}
+
+
+.frase {
+
+    color: #999;
+
+    line-height: 1.7;
+
+    font-style: italic;
+
+    max-width: 550px;
+}
+
+
+/* =====================================================
+   SECCIONES
+===================================================== */
+
+
+section {
+
+    padding: 85px 20px;
+}
+
+
+section > h2 {
+
+    font-size: clamp(28px, 5vw, 42px);
+
+    margin: 10px auto 35px;
+}
+
+
+section > h2::after {
+
+    content: "";
+
+    display: block;
+
+    width: 80px;
+
+    height: 3px;
+
+    margin: 18px auto 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            transparent
+        );
+}
+
+
+/* =====================================================
+   TARJETAS
+===================================================== */
+
+
+.card {
+
+    position: relative;
+
+    width: min(92%, 560px);
+
+    margin: auto;
+
+    padding: 38px 25px;
+
+    border-radius: 25px;
+
+    border: 1px solid rgba(212,175,55,.28);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.015)
+        );
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+
+        0 20px 60px rgba(0,0,0,.4),
+
+        inset 0 0 25px rgba(212,175,55,.025);
+}
+
+
+.card::before {
+
+    content: "✦";
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 20px;
+
+    color: #d4af37;
+
+    opacity: .6;
+}
+
+
+.icono-card {
+
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+
+.card h3 {
+
+    font-size: 25px;
+
+    color: #d4af37;
+
+    margin: 10px 0 20px;
+}
+
+
+.card p {
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    color: #ddd;
+}
+
+
+/* =====================================================
+   COVER
+===================================================== */
+
+
+.cover-section {
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(212,175,55,.08),
+            transparent 50%
+        );
+}
+
+
+.cover-card {
+
+    width: min(92%, 560px);
+
+    margin: auto;
+
+    padding: 45px 25px;
+
+    border-radius: 30px;
+
+    border:
+
+        1px solid rgba(212,175,55,.55);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(212,175,55,.12),
+            rgba(255,255,255,.03)
+        );
+
+    box-shadow:
+
+        0 0 50px rgba(212,175,55,.12),
+
+        inset 0 0 25px rgba(212,175,55,.04);
+}
+
+
+.regalo {
+
+    font-size: 65px;
+
+    animation: regalo 2.5s ease-in-out infinite;
+}
+
+
+.cover-card h3 {
+
+    color: #d4af37;
+
+    font-size: 28px;
+
+    margin: 20px 0;
+}
+
+
+.cover-card p {
+
+    color: #ddd;
+
+    line-height: 1.8;
+
+    font-size: 17px;
+}
+
+
+.cover-frase {
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background: rgba(212,175,55,.08);
+
+    color: #ffe68a;
+
+    font-weight: bold;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   MEME ALFREDO ADAME
+===================================================== */
+
+
+.meme-section {
+
+    padding-top: 50px;
+}
+
+
+.meme-card {
+
+    width: min(92%, 650px);
+
+    margin: auto;
+
+    padding: 15px;
+
+    border-radius: 25px;
+
+    background: #111;
+
+    border: 1px solid rgba(212,175,55,.25);
+
+    box-shadow:
+
+        0 20px 50px rgba(0,0,0,.5);
+}
+
+
+/*
+=========================================================
+MEME DE ALFREDO ADAME
+
+COLOCA TU IMAGEN EN:
+
+img/adame.jpg
+
+=========================================================
+*/
+
+
+.meme-imagen {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 600px;
+
+    object-fit: contain;
+
+    border-radius: 15px;
+}
+
+
+/* =====================================================
+   CONFIRMACIÓN
+===================================================== */
+
+
+.confirmacion {
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(212,175,55,.07),
+            transparent 55%
+        );
+}
+
+
+.confirmacion-card {
+
+    padding-top: 40px;
+}
+
+
+input {
+
+    width: min(85%, 400px);
+
+    padding: 16px 20px;
+
+    margin: 15px 0;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(212,175,55,.4);
+
+    outline: none;
+
+    background: rgba(255,255,255,.07);
+
+    color: white;
+
+    font-size: 16px;
+
+    text-align: center;
+
+    transition: .3s;
+}
+
+
+input::placeholder {
+
+    color: #999;
+}
+
+
+input:focus {
+
+    border-color: #d4af37;
+
+    box-shadow:
+
+        0 0 20px rgba(212,175,55,.2);
+}
+
+
+#msg {
+
+    color: #d4af37;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   FINAL
+===================================================== */
+
+
+.final {
+
+    min-height: 60vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(212,175,55,.12),
+            transparent 50%
+        );
+}
+
+
+.final-iconos {
+
+    font-size: 55px;
+
+    margin-bottom: 20px;
+}
+
+
+.final h2 {
+
+    font-size: clamp(30px, 6vw, 50px);
+
+    color: #d4af37;
+}
+
+
+.final p {
+
+    color: #aaa;
+
+    line-height: 1.7;
+
+    font-size: 17px;
+}
+
+
+.final-nombre {
+
+    color: #d4af37 !important;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+
+    font-size: 14px !important;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+
+footer {
+
+    padding: 50px 20px 70px;
+
+    color: #d4af37;
+
+    font-size: 16px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   CONFETI
+===================================================== */
+
+
+.confeti {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 30;
+}
+
+
+.confeti::before {
+
+    content:
+        "🎉 🎊 ✨ 🎉 🎊 ✨ 🎉 🎊 ✨ 🎉";
+
+    position: absolute;
+
+    top: -80px;
+
+    left: 0;
+
+    width: 100%;
+
+    font-size: 35px;
+
+    word-spacing: 25px;
+
+    animation: caer 9s linear infinite;
+}
+
+
+@keyframes caer {
+
+    0% {
+
+        transform:
+            translateY(-100px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
    ANIMACIONES
-========================== */
+===================================================== */
 
 
-@keyframes entrada{
+@keyframes entrada {
 
+    from {
 
-from{
+        opacity: 0;
 
-opacity:0;
+        transform:
+            translateY(40px)
+            scale(.96);
+    }
 
-transform:translateY(50px);
+    to {
 
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
 }
 
 
-to{
+@keyframes aparecerContenido {
 
-opacity:1;
+    from {
 
-transform:translateY(0);
+        opacity: 0;
 
+        transform: translateY(25px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+    }
 }
 
 
+@keyframes brillo {
+
+    0% {
+
+        background-position: 0% center;
+    }
+
+    100% {
+
+        background-position: 200% center;
+    }
 }
 
 
+@keyframes fotoEntrada {
 
+    from {
 
+        opacity: 0;
 
-footer{
+        transform: scale(.5);
+    }
 
-padding:30px;
+    to {
 
-color:#d4af37;
+        opacity: 1;
 
-}
-/* CONFETI */
-
-.confeti{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-pointer-events:none;
-
-overflow:hidden;
-
+        transform: scale(1);
+    }
 }
 
 
+@keyframes flotar {
 
-.confeti::before{
+    0%,
+    100% {
 
+        transform: translateY(0);
+    }
 
-content:"🎉 🎊 ✨ 🎉 🎊 ✨ 🎉 🎊";
+    50% {
 
-position:absolute;
-
-font-size:40px;
-
-animation:caer 8s linear infinite;
-
-
+        transform: translateY(-9px);
+    }
 }
 
 
+@keyframes estrella {
 
+    0%,
+    100% {
 
-@keyframes caer{
+        opacity: .3;
 
+        transform: scale(.8);
+    }
 
-0%{
+    50% {
 
-transform:translateY(-100px);
+        opacity: 1;
 
+        transform: scale(1.3);
+    }
 }
 
 
-100%{
+@keyframes regalo {
 
-transform:translateY(100vh);
+    0%,
+    100% {
 
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+
+        transform: rotate(-5deg) scale(1.08);
+    }
 }
 
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+
+@media (max-width: 600px) {
+
+
+    .bienvenida {
+
+        padding: 45px 20px;
+
+        border-radius: 25px;
+    }
+
+
+    .bienvenida h1 {
+
+        font-size: 35px;
+    }
+
+
+    .bienvenida h2 {
+
+        font-size: 21px;
+    }
+
+
+    .foto-principal {
+
+        width: 190px;
+
+        height: 190px;
+    }
+
+
+    .hero {
+
+        padding: 60px 15px;
+    }
+
+
+    .hero h1 {
+
+        font-size: 35px;
+    }
+
+
+    .fecha {
+
+        font-size: 19px;
+    }
+
+
+    .globos span {
+
+        font-size: 42px;
+    }
+
+
+    .card,
+    .cover-card,
+    .meme-card {
+
+        width: 94%;
+    }
+
+
+    section {
+
+        padding: 70px 15px;
+    }
+
+
+    .final-iconos {
+
+        font-size: 45px;
+    }
 
 }
