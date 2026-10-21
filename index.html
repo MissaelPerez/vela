@@ -61,9 +61,17 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr);
       gap: 14px;
       align-items: start
+    }
+
+    .videopanel {
+      order: 0
+    }
+
+    .gamepanel {
+      order: 1
     }
 
     .panel {
@@ -159,7 +167,9 @@
       }
 
       .layout {
-        grid-template-columns: 1fr
+        display: flex;
+        flex-direction: column;
+        gap: 12px
       }
 
       header {
@@ -175,10 +185,22 @@
         padding: 11px
       }
 
+      .videopanel {
+        order: 0;
+        width: 100%
+      }
+
       .gamepanel {
+        order: 1;
         max-width: 520px;
         margin: auto;
         width: 100%
+      }
+
+      video {
+        max-height: none;
+        aspect-ratio: 16/9;
+        object-fit: contain
       }
     }
   </style>
@@ -194,6 +216,20 @@
       </div>
     </header>
     <main class="layout">
+      <section class="panel videopanel">
+        <h2 style="margin:0 0 10px;color:var(--wine)">Video del día</h2>
+        <video id="video" controls playsinline preload="metadata">
+          <source src="video-demo.mp4" type="video/mp4">
+          Tu navegador no puede reproducir este video.
+        </video>
+        <label for="videoUrl">URL directa del video (opcional)</label>
+        <input id="videoUrl" type="url" placeholder="https://.../video.mp4">
+        <div class="controls"><button id="loadVideo" class="secondary">Cargar video</button></div>
+        <div class="notice">Primero mira el video y después juega. Si quieres que el juego empiece con el video, pulsa
+          “Jugar”: ambos arrancan juntos. El juego termina cuando acaba el video.</div>
+        <p class="hint">Agrega un archivo llamado <b>video-demo.mp4</b> a la raíz del repositorio o pega una URL pública
+          directa a un MP4.</p>
+      </section>
       <section class="panel gamepanel">
         <div class="stats"><span>Puntos: <span id="score">0</span></span><span id="status">Listo</span></div>
         <canvas id="game" width="360" height="480" aria-label="Minijuego de obstáculos"></canvas>
@@ -201,23 +237,10 @@
           <button id="start">▶ Jugar</button>
           <button id="pause" class="secondary">Ⅱ Pausar</button>
         </div>
-        <p class="hint">En celular: toca el lado izquierdo o derecho, o desliza el dedo. En PC: usa ← → o A/D.</p>
+        <p class="hint">En celular: toca la parte superior del juego para saltar; toca izquierda/derecha o desliza para
+          moverte. En PC: ← → para moverte y espacio/↑ para saltar. ¡El personaje se ríe al saltar!</p>
       </section>
-      <section class="panel">
-        <h2 style="margin:0 0 10px;color:var(--wine)">Video del día</h2>
-        <video id="video" controls playsinline preload="metadata">
-          <!-- Reemplaza video-demo.mp4 por tu archivo o URL de video -->
-          <source src="video-demo.mp4" type="video/mp4">
-          Tu navegador no puede reproducir este video.
-        </video>
-        <label for="videoUrl">URL del video (opcional)</label>
-        <input id="videoUrl" type="url" placeholder="https://.../video.mp4">
-        <div class="controls"><button id="loadVideo" class="secondary">Cargar video</button></div>
-        <div class="notice">El juego se detiene cuando termina el video. Para iniciar el video, la persona debe tocar
-          reproducir; los celulares suelen bloquear la reproducción automática con sonido.</div>
-        <p class="hint">Para publicar: agrega un video llamado <b>video-demo.mp4</b> a la carpeta raíz, o pega una URL
-          directa a un archivo MP4. Los enlaces normales de Facebook no siempre funcionan como fuentes directas.</p>
-      </section>
+
     </main>
   </div>
   <script>
@@ -225,9 +248,9 @@
       const canvas = document.getElementById('game'), ctx = canvas.getContext('2d');
       const scoreEl = document.getElementById('score'), statusEl = document.getElementById('status');
       const video = document.getElementById('video');
-      let running = false, over = false, score = 0, last = 0, spawn = 0, speed = 155, obstacles = [], lane = 1;
+      let running = false, over = false, score = 0, last = 0, spawn = 0, speed = 155, obstacles = [], lane = 1, jumpUntil = 0, laughUntil = 0, walkPhase = 0;
       const lanes = [90, 180, 270], player = { x: 180, y: 390, w: 36, h: 48 };
-      function reset() { score = 0; spawn = 0; speed = 155; obstacles = []; lane = 1; player.x = lanes[lane]; over = false; scoreEl.textContent = '0'; statusEl.textContent = 'Jugando'; }
+      function reset() { score = 0; spawn = 0; speed = 155; obstacles = []; lane = 1; player.x = lanes[lane]; jumpUntil = 0; laughUntil = 0; walkPhase = 0; over = false; scoreEl.textContent = '0'; statusEl.textContent = 'Jugando'; }
       function roundedRect(x, y, w, h, r, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.fill(); }
       function draw() {
         const w = canvas.width, h = canvas.height;
@@ -253,24 +276,36 @@
             ctx.fillStyle = '#4b3b22'; ctx.font = 'bold 25px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', o.x, o.y + 12);
           }
         }
-        // player: simple friendly runner with hat-inspired silhouette
-        ctx.fillStyle = '#222'; ctx.beginPath(); ctx.ellipse(player.x, player.y + 20, 19, 7, 0, 0, Math.PI * 2); ctx.fill();
-        roundedRect(player.x - 12, player.y - 3, 24, 30, 8, '#741b2b');
-        ctx.fillStyle = '#f2bd91'; ctx.beginPath(); ctx.arc(player.x, player.y - 13, 13, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#741b2b'; ctx.beginPath(); ctx.ellipse(player.x, player.y - 25, 27, 7, -.12, 0, Math.PI * 2); ctx.fill(); roundedRect(player.x - 13, player.y - 36, 25, 10, 5, '#741b2b');
-        ctx.strokeStyle = '#202027'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(player.x - 7, player.y + 25); ctx.lineTo(player.x - 13, player.y + 39); ctx.moveTo(player.x + 7, player.y + 25); ctx.lineTo(player.x + 14, player.y + 39); ctx.stroke();
+        // Personaje animado: rebota al correr, salta y se ríe al aterrizar.
+        const now = performance.now(), jumping = now < jumpUntil;
+        const lift = jumping ? Math.sin(((jumpUntil - now) / 650) * Math.PI) * 48 : Math.abs(Math.sin(walkPhase)) * 3;
+        const py = player.y - lift;
+        ctx.fillStyle = '#222'; ctx.beginPath(); ctx.ellipse(player.x, player.y + 20, Math.max(7, 19 - lift * .18), 7, 0, 0, Math.PI * 2); ctx.fill();
+        // brazos animados
+        ctx.strokeStyle = '#f2bd91'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath();
+        ctx.moveTo(player.x - 10, py + 3); ctx.lineTo(player.x - 20, py - 5 + Math.sin(walkPhase) * 5);
+        ctx.moveTo(player.x + 10, py + 3); ctx.lineTo(player.x + 20, py - 5 - Math.sin(walkPhase) * 5); ctx.stroke();
+        roundedRect(player.x - 12, py - 3, 24, 30, 8, '#741b2b');
+        ctx.fillStyle = '#f2bd91'; ctx.beginPath(); ctx.arc(player.x, py - 13, 13, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#741b2b'; ctx.beginPath(); ctx.ellipse(player.x, py - 25, 27, 7, -.12, 0, Math.PI * 2); ctx.fill(); roundedRect(player.x - 13, py - 36, 25, 10, 5, '#741b2b');
+        // ojos y sonrisa / risa al saltar
+        ctx.fillStyle = '#272126'; ctx.beginPath(); ctx.arc(player.x - 4, py - 15, 1.6, 0, Math.PI * 2); ctx.arc(player.x + 4, py - 15, 1.6, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#5b2026'; ctx.lineWidth = 2; ctx.beginPath(); if (now < laughUntil || jumping) { ctx.arc(player.x, py - 9, 5, 0, Math.PI); ctx.fillStyle = '#fff'; ctx.fill(); } else { ctx.arc(player.x, py - 10, 4, 0.15, Math.PI - .15); } ctx.stroke();
+        ctx.strokeStyle = '#202027'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath();
+        if (jumping) { ctx.moveTo(player.x - 7, py + 24); ctx.lineTo(player.x - 17, py + 18); ctx.moveTo(player.x + 7, py + 24); ctx.lineTo(player.x + 17, py + 18); } else { ctx.moveTo(player.x - 7, py + 25); ctx.lineTo(player.x - 13 + Math.sin(walkPhase) * 4, py + 39); ctx.moveTo(player.x + 7, py + 25); ctx.lineTo(player.x + 14 - Math.sin(walkPhase) * 4, py + 39); } ctx.stroke();
+        if (jumping) { ctx.fillStyle = '#f5b942'; ctx.font = 'bold 17px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('¡JA!', player.x + 27, py - 39); }
         if (!running) { ctx.fillStyle = '#1f2026cc'; ctx.fillRect(20, 190, 320, 76); ctx.fillStyle = 'white'; ctx.textAlign = 'center'; ctx.font = 'bold 20px system-ui'; ctx.fillText(over ? '¡Fin del juego!' : '¡Listo para correr!', 180, 222); ctx.font = '14px system-ui'; ctx.fillText(over ? 'Pulsa Jugar para intentarlo otra vez' : 'Esquiva los obstáculos', 180, 246); }
       }
       function hit(a, b) { return Math.abs(a.x - b.x) < (a.w / 2 + 22) && Math.abs(a.y - b.y) < (a.h / 2 + 25); }
       function endGame(msg = '¡Choque! Inténtalo otra vez') { running = false; over = true; statusEl.textContent = 'Terminado'; draw(); }
       function loop(t) {
         if (!running) return;
-        const dt = Math.min((t - last) / 1000 || 0, .04); last = t; spawn += dt; score += dt * 10; speed += dt * 1.3;
+        const dt = Math.min((t - last) / 1000 || 0, .04); last = t; spawn += dt; score += dt * 10; speed += dt * 1.3; walkPhase += dt * 12;
         if (spawn > .82) { spawn = 0; const laneIndex = Math.floor(Math.random() * 3); obstacles.push({ x: lanes[laneIndex], y: 225, type: ['car', 'pothole', 'cone'][Math.floor(Math.random() * 3)], w: 38, h: 48 }); }
         for (const o of obstacles) o.y += speed * dt;
         obstacles = obstacles.filter(o => o.y < 520);
         const p = { x: player.x, y: player.y, w: player.w, h: player.h };
-        if (obstacles.some(o => hit(p, o))) { endGame(); return; }
+        if (obstacles.some(o => hit(p, o) && performance.now() >= jumpUntil)) { endGame(); return; }
         scoreEl.textContent = Math.floor(score); draw(); requestAnimationFrame(loop);
       }
       function start() {
@@ -284,10 +319,11 @@
         }
       }
       function move(dir) { if (!running) return; lane = Math.max(0, Math.min(2, lane + dir)); player.x = lanes[lane]; }
+      function jump() { if (!running) return; jumpUntil = performance.now() + 650; laughUntil = performance.now() + 800; statusEl.textContent = '¡Ja, ja!'; setTimeout(() => { if (running) statusEl.textContent = 'Jugando'; }, 500); }
       document.getElementById('start').addEventListener('click', start);
       document.getElementById('pause').addEventListener('click', () => { if (running) { running = false; statusEl.textContent = 'Pausado'; draw(); } else if (!over) { running = true; statusEl.textContent = 'Jugando'; last = performance.now(); requestAnimationFrame(loop); } });
-      window.addEventListener('keydown', e => { if (['ArrowLeft', 'a', 'A'].includes(e.key)) { e.preventDefault(); move(-1) } if (['ArrowRight', 'd', 'D'].includes(e.key)) { e.preventDefault(); move(1) } });
-      canvas.addEventListener('pointerdown', e => { const r = canvas.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width; if (x < .42) move(-1); else if (x > .58) move(1); });
+      window.addEventListener('keydown', e => { if (['ArrowLeft', 'a', 'A'].includes(e.key)) { e.preventDefault(); move(-1) } if (['ArrowRight', 'd', 'D'].includes(e.key)) { e.preventDefault(); move(1) } if (['ArrowUp', ' ', 'w', 'W'].includes(e.key)) { e.preventDefault(); jump() } });
+      canvas.addEventListener('pointerdown', e => { const r = canvas.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width; if (e.clientY - r.top < r.height * .55) { jump(); return; } if (x < .42) move(-1); else if (x > .58) move(1); else jump(); });
       let touchX = null; canvas.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true }); canvas.addEventListener('touchend', e => { if (touchX === null) return; const dx = e.changedTouches[0].clientX - touchX; if (Math.abs(dx) > 25) move(dx < 0 ? -1 : 1); touchX = null; }, { passive: true });
       document.getElementById('loadVideo').addEventListener('click', () => { const url = document.getElementById('videoUrl').value.trim(); if (!url) return; video.pause(); video.innerHTML = ''; const s = document.createElement('source'); s.src = url; s.type = url.toLowerCase().includes('.webm') ? 'video/webm' : 'video/mp4'; video.appendChild(s); video.load(); });
       video.addEventListener('ended', () => { running = false; over = true; statusEl.textContent = 'Video terminado'; draw(); });
