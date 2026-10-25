@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -122,45 +119,51 @@
       white-space: nowrap;
     }
 
-    .video-frame {
-      position: relative;
+    /* Reel público de Facebook */
+    .reel-frame {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      max-width: 400px;
+      height: 650px;
+      margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
       background: #080811;
     }
 
-    video {
+    .reel-frame iframe {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      border: 0;
       background: #080811;
     }
 
-    .video-note {
+    .reel-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 42px;
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: white;
+      background: #1877f2;
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 750;
+    }
+
+    .reel-note {
+      margin: 9px 1px 0;
       color: var(--muted);
       font-size: .8rem;
       line-height: 1.5;
-      margin: 9px 1px 0;
     }
 
-    .video-url {
-      display: flex;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .video-url input {
-      flex: 1;
-      min-width: 0;
-      color: white;
-      background: #11111e;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      font-size: .8rem;
+    @media (max-width: 420px) {
+      .reel-frame {
+        height: 580px;
+      }
     }
 
     .game-frame {
@@ -317,39 +320,37 @@
       </div>
     </header>
 
-    <!-- VIDEO: SIEMPRE ANTES DEL JUEGO -->
-    <section class="panel" id="videoSection">
+    <!-- REEL PÚBLICO DE MIGUEL VELA -->
+    <section class="panel" id="reelsSection">
       <div class="panel-heading">
-        <h2>🎬 Un video para ti</h2>
-        <span class="tag">Primero mira esto</span>
+        <h2>📱 Reel de Miguel Vela</h2>
+        <span class="tag">Facebook</span>
       </div>
 
-      <div class="video-frame">
-        <video id="myVideo" controls playsinline preload="metadata">
-          <source src="video-demo.mp4" type="video/mp4">
-          Tu navegador no puede reproducir este video.
-        </video>
+      <div class="reel-frame">
+        <iframe
+          src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2198148591100253&show_text=false&autoplay=true&mute=true"
+          title="Reel público de Miguel Vela en Facebook"
+          loading="lazy"
+          scrolling="no"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
       </div>
 
-      <p class="video-note">
-        Dale play al video y disfrútalo mientras puedes jugar en lo que lo ves❤️
+      <p class="reel-note">
+        ¿No se reproduce el Reel? Puedes verlo directamente en Facebook.
       </p>
-
-      <div class="video-url">
-        <input
-          id="videoUrl"
-          type="url"
-          inputmode="url"
-          placeholder="URL pública de tu video (opcional)"
-          aria-label="URL pública del video"
-        >
-        <button class="btn btn-small" id="loadVideo" type="button">
-          Cargar
-        </button>
-      </div>
+      <a
+        class="reel-link"
+        href="https://www.facebook.com/reel/2198148591100253"
+        target="_blank"
+        rel="noopener noreferrer">
+        Ver Reel en Facebook ↗
+      </a>
     </section>
 
-    <!-- JUEGO: MISMO ANCHO QUE EL VIDEO -->
+    <!-- MINIJUEGO VELA RUNNER -->
     <section class="panel" id="gameSection">
       <div class="panel-heading">
         <h2>🎮 Vela Runner</h2>
@@ -406,7 +407,6 @@
       const canvas = document.getElementById("game");
       const ctx = canvas.getContext("2d", { alpha: false });
       const status = document.getElementById("gameStatus");
-      const video = document.getElementById("myVideo");
 
       const W = 640;
       const H = 360;
@@ -1049,36 +1049,6 @@ function drawCharacter() {
         draw();
         if (running) raf = requestAnimationFrame(loop);
       }
-
-      // Cargar una URL pública MP4 si se proporciona.
-      document.getElementById("loadVideo").addEventListener("click", () => {
-        const url = document.getElementById("videoUrl").value.trim();
-
-        if (!url) {
-          video.load();
-          setStatus("Video local listo. Pulsa Jugar cuando quieras.");
-          return;
-        }
-
-        try {
-          const parsed = new URL(url);
-          if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-            throw new Error("URL no válida");
-          }
-
-          video.src = parsed.href;
-          video.load();
-          video.play().catch(() => {
-            // El usuario puede iniciar el video manualmente.
-          });
-        } catch {
-          alert("Introduce una URL válida y pública para tu video.");
-        }
-      });
-
-      video.addEventListener("ended", () => {
-        setStatus("¡Gracias por ver el video! ❤️ Ahora puedes jugar.");
-      });
 
       // Dibuja una pantalla inicial sin animación continua.
       resetGame();
