@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#10101b">
+  <meta name="theme-color" content="#6f1028">
   <title>VELA</title>
 
   <style>
@@ -318,16 +318,18 @@
 
     /* Identidad visual guinda, blanca y verde; optimizada para móviles */
     :root {
-      --bg: #f6f3f1;
+      --bg: #f3f5f2;
       --panel: #ffffff;
-      --pink: #7d1735;
-      --purple: #087f54;
+      --pink: #6f1028;
+      --purple: #08734b;
       --text: #282326;
       --muted: #70676b;
       --border: rgba(100, 25, 48, .16);
     }
     body {
-      background: linear-gradient(180deg, #f1e4e7 0, #f8f6f3 260px, #f6f3f1 100%);
+      background:
+        radial-gradient(ellipse at top right, rgba(8,115,75,.10), transparent 36%),
+        linear-gradient(180deg, #eee5e7 0, #f6f7f3 280px, #f3f5f2 100%);
       color: var(--text);
     }
     .logo { border: 2px solid #7d1735; }
@@ -371,33 +373,48 @@
       border-radius: 10px; text-align: center;
     }
     .reel-note { color: #70676b; }
-    .reel-list-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 20px 0 10px; }
-    .reel-list-heading h3 { margin: 0; font-size: .98rem; color: #7d1735; }
-    .reel-list-heading span { color: var(--muted); font-size: .72rem; }
-    .reel-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-    .reel-card {
-      display: flex; align-items: center; gap: 9px; min-width: 0; min-height: 54px;
-      padding: 9px; border-radius: 11px; border: 1px solid #eadde0;
-      background: #fff; color: #40353a; text-align: left; cursor: pointer;
-      font: inherit; transition: transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .reel-card .reel-number {
-      display: inline-grid; place-items: center; flex: 0 0 29px; height: 29px;
-      border-radius: 9px; background: #f5e7eb; color: #7d1735; font-size: .78rem; font-weight: 900;
-    }
-    .reel-card .reel-label { font-size: .78rem; font-weight: 750; line-height: 1.25; }
-    .reel-card[aria-pressed="true"] { border-color: #7d1735; background: #f9edf0; box-shadow: inset 0 0 0 1px #7d1735; }
-    .reel-card[aria-pressed="true"] .reel-number { color: white; background: #7d1735; }
     .btn { border-color: rgba(125,23,53,.2); background: #4b2735; }
     .btn-primary { color: white; background: linear-gradient(135deg, #a52b4d, #7d1735); }
     .btn-jump { color: white; background: linear-gradient(135deg, #149765, #087f54); }
-    .message h2 { color: #7d1735; }
-    .message p, footer { color: #70676b; }
+    .message h2 { color: #6f1028; }
+    .message p, footer { color: #655d60; }
+
+    .social-panel { border-top: 4px solid #08734b; }
+    .social-grid { display: grid; grid-template-columns: 1fr; gap: 9px; }
+    .social-card {
+      display: flex; align-items: center; gap: 12px; min-width: 0;
+      padding: 12px; border-radius: 13px; border: 1px solid #e0e5df;
+      background: linear-gradient(115deg, #fff 0%, #f8faf7 100%);
+      color: #29252a; text-decoration: none;
+      box-shadow: 0 4px 12px rgba(28, 46, 35, .045);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .social-card:hover { transform: translateY(-2px); box-shadow: 0 7px 16px rgba(28,46,35,.09); }
+    .social-icon {
+      display: grid; place-items: center; flex: 0 0 42px; height: 42px;
+      border-radius: 12px; color: white; font-size: 1.35rem; font-weight: 900;
+      background: #171717;
+    }
+    .social-card.facebook .social-icon { background: #1877f2; font-family: Arial, sans-serif; }
+    .social-card.women .social-icon { background: linear-gradient(135deg, #08734b, #6f1028); }
+    .social-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 3px; }
+    .social-copy strong { font-size: .91rem; color: #6f1028; }
+    .social-copy small { font-size: .76rem; color: #71686b; overflow-wrap: anywhere; }
+    .social-arrow { color: #08734b; font-size: 1.1rem; font-weight: 900; }
+    .reel-nav-btn { border-color: #d7c2c7; color: #6f1028; }
+    .reel-frame { max-width: 260px; height: 360px; }
+    .reel-link { background: #6f1028; border-color: #6f1028; }
+    .btn-jump { background: linear-gradient(135deg, #149765, #08734b); }
+    @media (min-width: 760px) {
+      .wrap { width: min(100% - 40px, 980px); }
+      .reels-panel, #gameSection { max-width: 720px; margin-left: auto; margin-right: auto; }
+      .reel-frame { max-width: 270px; height: 370px; }
+      .social-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .social-card { align-items: flex-start; }
+      .social-copy small { overflow-wrap: anywhere; }
+    }
     @media (max-width: 600px) {
-      .reel-frame { max-width: 280px; height: clamp(300px, 45svh, 390px); }
-      .reel-list { gap: 7px; }
-      .reel-card { padding: 8px 7px; }
-      .reel-card .reel-label { font-size: .74rem; }
+      .reel-frame { max-width: 245px; height: clamp(270px, 38svh, 340px); }
     }
 
   </style>
@@ -407,7 +424,7 @@
   <main class="wrap">
 
     <header>
-      <img class="logo" src="logo-vela.jpg" alt="Logo Vela">
+      <img class="logo" src="assets/logo-vela.jpg" alt="Logo Vela">
       <div class="brand">
         <h1>MIGUEL VELA</h1>
         <p class="subtitle">Videos, actividades y Vela Runner</p>
@@ -442,11 +459,6 @@
       <p class="reel-note">La reproducción automática entre videos puede estar limitada por Facebook. Si un Reel no carga, ábrelo directamente en Facebook.</p>
       <a class="reel-link" id="openReel" href="https://www.facebook.com/reel/2198148591100253" target="_blank" rel="noopener noreferrer">Ver Reel en Facebook ↗</a>
 
-      <div class="reel-list-heading">
-        <h3>Todos los Reels</h3>
-        <span>Selecciona uno</span>
-      </div>
-      <div class="reel-list" id="reelList" aria-label="Lista de Reels"></div>
     </section>
 
     <!-- MINIJUEGO VELA RUNNER -->
@@ -488,6 +500,32 @@
       </div>
     </section>
 
+    <!-- REDES SOCIALES -->
+    <section class="panel social-panel" id="redesSection">
+      <div class="panel-heading">
+        <h2>Redes oficiales</h2>
+        <span class="tag">Síguenos</span>
+      </div>
+      <p class="section-intro">Conoce más contenido y mantente al tanto en sus redes sociales.</p>
+      <div class="social-grid">
+        <a class="social-card tiktok" href="https://www.tiktok.com/@velachaviza?_r=1&_t=ZS-9Apw1FARJ6i" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon" aria-hidden="true">♪</span>
+          <span class="social-copy"><strong>Vela Chaviza</strong><small>TikTok · @velachaviza</small></span>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="social-card facebook" href="https://www.facebook.com/share/18kZbSUv5q/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon" aria-hidden="true">f</span>
+          <span class="social-copy"><strong>Redes de Vela</strong><small>Facebook</small></span>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="social-card women" href="https://www.tiktok.com/@mujeres_vela?_r=1&_t=ZS-9Apw4sWHBwH" target="_blank" rel="noopener noreferrer">
+          <span class="social-icon" aria-hidden="true">♀</span>
+          <span class="social-copy"><strong>Mujeres Vela</strong><small>TikTok · @mujeres_vela</small></span>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
     <section class="message">
       <h2>Participación y comunidad</h2>
       <p>Conoce los videos y disfruta el minijuego Vela Runner.</p>
@@ -515,7 +553,6 @@
         "4557964657756942"
       ];
       const player = document.getElementById("reelPlayer");
-      const list = document.getElementById("reelList");
       const counter = document.getElementById("reelCounter");
       const openLink = document.getElementById("openReel");
       const prev = document.getElementById("prevReel");
@@ -529,20 +566,7 @@
         player.title = `Reel ${current + 1} de Miguel Vela en Facebook`;
         openLink.href = url;
         counter.textContent = `Reel ${current + 1} de ${reels.length}`;
-        [...list.querySelectorAll(".reel-card")].forEach((button, i) => {
-          button.setAttribute("aria-pressed", String(i === current));
-        });
       }
-
-      reels.forEach((id, i) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "reel-card";
-        button.setAttribute("aria-pressed", String(i === current));
-        button.innerHTML = `<span class="reel-number">${String(i + 1).padStart(2, "0")}</span><span class="reel-label">Reel de Miguel Vela</span>`;
-        button.addEventListener("click", () => loadReel(i));
-        list.appendChild(button);
-      });
       prev.addEventListener("click", () => loadReel(current - 1));
       next.addEventListener("click", () => loadReel(current + 1));
     })();
