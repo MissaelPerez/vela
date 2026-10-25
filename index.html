@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -122,12 +125,13 @@
     /* Reel público de Facebook */
     .reel-frame {
       width: 100%;
-      max-width: 400px;
-      height: 650px;
+      max-width: 340px;
+      height: 500px;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
       background: #080811;
+      contain: layout paint;
     }
 
     .reel-frame iframe {
@@ -160,9 +164,16 @@
       line-height: 1.5;
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 600px) {
       .reel-frame {
-        height: 580px;
+        max-width: 320px;
+        height: 400px;
+        height: clamp(340px, 52vh, 430px);
+        height: clamp(340px, 52svh, 430px);
+      }
+
+      .reel-note {
+        font-size: .76rem;
       }
     }
 
@@ -331,7 +342,7 @@
         <iframe
           src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2198148591100253&show_text=false&autoplay=true&mute=true"
           title="Reel público de Miguel Vela en Facebook"
-          loading="lazy"
+          loading="eager"
           scrolling="no"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           allowfullscreen>
